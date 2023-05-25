@@ -1,0 +1,32 @@
+.calculatorWrap {
+    @media (min-width:768px) {
+        padding-top: 20px;
+    }
+    max-width: 768px;
+    margin: 0 auto;
+    .customWithIcon {
+        input {
+            height: 48px;
+            width: 100%;
+        }
+        span {
+            height: 48px;
+            width: 48px;
+            line-height: 48px;
+            font-size: 1.3em;
+            background-color: $primaryColor;
+        }
+    }
+    .inputUserWrap {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin: 10px 0;
+        .inputUser {
+            input {
+                height: 46px;
+                width: 100px;
+            }
+        }
+    }
+}

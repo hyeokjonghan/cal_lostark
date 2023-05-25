@@ -1,0 +1,64 @@
+.tabRadioWrap {
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+    overflow-y: hidden;
+    overflow-x: auto;
+    justify-content: center;
+
+    @media (max-width: 768px) {
+        padding: 0 10px !important;
+        justify-content: left;
+    }
+
+    &::-webkit-scrollbar {
+        width: 0 !important;
+        height: 0 !important;
+    }
+
+    li {
+        scroll-snap-align: start;
+        flex: 0 0 auto;
+
+        label {
+            cursor: pointer;
+
+            input[type=radio]:checked+span {
+                color: #FFF;
+                background-color: $primaryColor;
+            }
+
+            input[type=radio]:hover+span {
+                color: #FFF;
+                background-color: $primaryColor;
+            }
+
+            span {
+                border: 1px solid $subPrimaryColor;
+                border-radius: 5px;
+                background-color: #FFF;
+                color: $primaryColor;
+                font-weight: bold;
+                transition: color 0.2s, background-color 0.2s;
+                display: inline-block;
+                padding: 10px 8px;
+            }
+        }
+    }
+
+    .tabRadio {
+        display: inline-block;
+
+        input[type=radio] {
+            display: none;
+        }
+    }
+}
+
+
+
+/* input */
+input[type=number],
+input[type=text] {
+    @include inputFormBox()
+}

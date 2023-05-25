@@ -1,0 +1,14 @@
+.footerWrap {
+    height: $footerHeight;
+    background-color: $primaryColor;
+    .footerInfoWrap {
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        height: $footerHeight;
+        li {
+            color: $subGrayColor;
+            font-size: 0.8em;
+        }
+    }
+}

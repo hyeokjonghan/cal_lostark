@@ -1,0 +1,33 @@
+.tooltipWrap {
+    display: inline-block;
+    position: relative;
+    height: 15px;
+    margin-left: 5px;
+    .tooltipIcon {
+        border-radius: 50%;
+        overflow: hidden;
+        background-color: $subGrayColor;
+        color: #FFF;
+        font-size: 0.9em;
+        width: 15px;
+        height: 15px;
+        display: inline-block;
+        text-align: center;
+        line-height: 15px;
+        cursor: pointer;
+    }
+}
+
+.tooltipElement {
+    display: block;
+    position: absolute;
+    background-color: $subPrimaryColor;
+    color: #FFF;
+    font-size: 0.9em;
+    padding: 5px;
+    border-radius: 5px;
+    white-space: nowrap;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100000;
+}

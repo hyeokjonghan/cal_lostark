@@ -1,0 +1,126 @@
+.responsibleTableWrap {
+    display: table;
+    width: 100%;
+
+    @media (max-width:768px) {
+        display: block;
+        padding: 0 10px;
+    }
+
+    .responsibleTableHeader {
+        display: table-row;
+
+        @media(max-width:768px) {
+            display: none;
+        }
+
+        >div {
+            padding: 10px 0;
+            background-color: $primaryColor;
+            color: #FFF;
+            text-align: center;
+            font-weight: bold;
+            display: table-cell;
+        }
+    }
+
+    .responsibleTableRow {
+        &:nth-child(2n) {
+            background-color: #FFF;
+        }
+
+        display: table-row;
+        background-color: $lightGrayColor;
+
+        @media (max-width:768px) {
+            display: table;
+            width: 100%;
+            border: 1px solid $subPrimaryColor;
+            border-radius: 5px;
+
+            .responsibleTableCol:last-child {
+                .responsibleTableColData {
+                    border-bottom: none;
+                }
+            }
+        }
+
+        .responsibleTableCol {
+            display: table-cell;
+            text-align: center;
+            border-bottom: 1px solid $subPrimaryColor;
+            padding: 10px 0;
+            vertical-align: middle;
+
+            @media (max-width: 768px) {
+                display: table-row;
+                width: 100%;
+
+                .responsibleTableColData {
+                    display: table-cell;
+                    text-align: left;
+                    padding: 10px 10px;
+                    font-size: 0.8em;
+                    border-bottom: 1px solid $subPrimaryColor;
+                }
+            }
+
+            .responsibleTableColTitle {
+                display: none;
+
+                @media(max-width: 768px) {
+                    text-align: right;
+                    display: table-cell;
+                    vertical-align: middle;
+                    padding-right: 10px;
+                    background-color: $primaryColor;
+                    color: #FFF;
+                    font-weight: bold;
+                    font-size: 0.9em;
+                    width: 120px;
+                }
+            }
+
+        }
+    }
+
+
+}
+
+.defaultTable {
+    border: 1px solid $primaryColor !important;
+    -webkit-box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.42);
+    box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.42);
+    vertical-align: middle;
+    width: 100%;
+
+    tr {
+        th {
+            background-color: $primaryColor;
+            text-align: center;
+            color: #FFF !important;
+        }
+
+        th,
+        td {
+            padding: 8px 5px;
+            font-size: 0.9em;
+            border-bottom: 1px solid $primaryColor;
+            color: $primaryColor;
+            white-space: pre;
+        }
+
+        &:last-child {
+            th,
+            td {
+                border-bottom: 0;
+            }
+        }
+
+        &:nth-child(2n) {
+            td {
+                background-color: $lightGrayColor;
+            }
+        }
+    }
+}

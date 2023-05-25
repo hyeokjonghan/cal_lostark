@@ -1,0 +1,171 @@
+ul {
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    
+}
+
+a {
+    text-decoration: none !important;
+    color: #FFF !important;
+}
+
+.button {
+    @include button();
+}
+
+.inputFormRightIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    input[type=number], input[type=text] {
+        @include inputFormBox();
+        border-radius: 5px 0 0 5px;
+    }
+    span {
+        border-radius: 0 5px 5px 0;
+        display: inline-block;
+        background-color: $subGrayColor;
+        color: #FFF;
+        width: 36px;
+        height: 36px;
+        text-align: center;
+        line-height: 36px;
+        font-size: 0.8em;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+    background-color: $subPrimaryColor;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #FFF;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: $primaryColor;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.pageHeaderImage {
+    height: 300px;
+    @media (max-width: 768px) {
+        height: 200px;
+    }
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: none;
+}
+
+.goldIconWrap {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.tooltipWrap {
+    display: flex;
+    align-items: center;
+}
+
+.d-flex.align-center {
+    align-items: center;
+}
+
+.itemWrap {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.grade5-bg {
+    background: linear-gradient(135deg,#341a09,#a24006);
+}
+
+.grade4-bg {
+    background: linear-gradient(135deg,#362003,#9e5f04);
+}
+
+.grade3-bg {
+    background: linear-gradient(135deg,#261331,#480d5d);
+}
+
+.grade2-bg {
+    background: linear-gradient(135deg,#111f2c,#113d5d);
+}
+
+.grade1-bg {
+    background: linear-gradient(135deg,#18220b,#304911);
+}
+
+.grade0-bg {
+    background: linear-gradient(135deg,#232323,#575757);
+}
+
+.grade5-color {
+    color: rgb(250, 93, 0);
+}
+
+.grade4-color {
+    color: rgb(249, 146, 0);
+}
+
+.grade3-color {
+    color: rgb(206, 67, 252);
+}
+
+.grade2-color {
+    color: rgb(0, 176, 250);
+}
+
+.grade1-color {
+    color: rgb(141, 249, 1);
+}
+
+.grade0-color {
+    color: rgb(255, 255, 255);
+}
+
+.loss {
+    font-weight: bold;
+    color: #FF3333;
+}
+
+.benefit {
+    font-weight: bold;
+    color:rgb(41, 139, 46);
+}
+
+.curour-pointer {
+    cursor: pointer;
+}
+
+.order-pointer {
+    display: inline-block;
+    &.desc {
+        transform: rotate(-180deg);
+    }
+    &.asc {
+        transform: rotate(0deg);
+    }
+    transform: rotate(-90deg);
+    transition: transform 0.2s;
+}
+
+.t-a-c {
+    text-align: center;
+}
