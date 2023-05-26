@@ -39,7 +39,7 @@ export function buyCreateRevenue(item:ProduceItem, greatSuccess: number, feeRedu
 
     // 판매 가격 * (아이템 제작 개수 * 영지 대성공 확률 계산)
     let greatSuccessRate = 1.05 + (5 * greatSuccess / 10000)
-    totalSellPrice = item.now_price * (item.production_number * greatSuccessRate) - chargePrice(item.now_price * (item.production_number * greatSuccessRate))
+    totalSellPrice = item.now_price * (item.production_number * greatSuccessRate) - (chargePrice(item.now_price) * item.production_number * greatSuccessRate)
 
     totalSellPrice = totalSellPrice - calProduceTotalPrice(item, feeReduction)
     
@@ -53,7 +53,7 @@ export function calProduceTotalPrice(item: ProduceItem, feeReduction: number) {
     })
 
     if(item.produce_price_type === '0') {
-        buyPriceTotal = buyPriceTotal + (item.produce_price * (1 - (feeReduction/100)))
+        buyPriceTotal = buyPriceTotal + Math.floor(item.produce_price * (1 - (feeReduction/100)))
     }
 
     return buyPriceTotal
@@ -64,7 +64,7 @@ export function matarialTotalPrice(item: ProduceItem) {
     item.with_item_material.map(material => {
         buyPriceTotal = buyPriceTotal + (material.now_price / material.bundle_count) * material.cost
     })
-
+    console.log("matarialTotalPrice =>", buyPriceTotal)
     return buyPriceTotal
 }
 

@@ -583,18 +583,18 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
                                                 <div className={`${style.totalResultFormula}`}>
                                                     <span className={`goldIconWrap`}>
                                                         <span className={`goldIcon`}></span>
-                                                        <span className={`d-flex align-center`}><span>{(produceModalItem.production_number * produceModalItem.now_price * (1.05 + (5*greatSuccessRate/10000))).toFixed(1)}</span> <Tooltip tooltipText={`판매시 비용(가격 * 제작된 갯수 * 대성공 확률)`}></Tooltip></span>
+                                                        <span className={`d-flex align-center`}><span>{(produceModalItem.production_number * produceModalItem.now_price * (1.05 + (5*greatSuccessRate/10000))).toFixed(1)}</span> <Tooltip tooltipText={`판매시 수익(가격 * 제작된 갯수 * 대성공 확률)`}></Tooltip></span>
                                                     </span>
                                                     <span>-</span>
                                                     <span className={`goldIconWrap`}>
                                                         <span className={`goldIcon`}></span>
-                                                        <span className={`d-flex align-center`}><span>{chargePrice(produceModalItem.production_number * produceModalItem.now_price * (1.05 + (5*greatSuccessRate/10000)))}</span> <Tooltip tooltipText={`거래 수수료`}></Tooltip></span>
+                                                        <span className={`d-flex align-center`}><span>{(chargePrice(produceModalItem.now_price) * produceModalItem.production_number * (1.05 + (5*greatSuccessRate/10000))).toFixed(1)}</span> <Tooltip tooltipText={`거래 수수료 * 제작된 개수 * 대성공 확률`}></Tooltip></span>
                                                     </span>
                                                     <span>-</span>
                                                     {produceModalItem.produce_price_type === '0' && <>
                                                     <span className={`goldIconWrap`}>
                                                         <span className={`goldIcon`}></span>
-                                                        <span className={`d-flex align-center`}><span>{(produceModalItem.produce_price * (1 - (feeReductionRate/100)))}</span> <Tooltip tooltipText={`제작비용`}></Tooltip></span>
+                                                        <span className={`d-flex align-center`}><span>{Math.floor(produceModalItem.produce_price * (1 - (feeReductionRate/100)))}</span> <Tooltip tooltipText={`제작비용, 소수점 내림`}></Tooltip></span>
                                                     </span>
                                                     <span>-</span>
                                                     </>}

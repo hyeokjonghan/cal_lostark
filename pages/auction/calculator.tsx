@@ -3,7 +3,7 @@ import NoImagePageLayout from "@/layout/noImagePageLayout"
 import style from "@/styles/page/auction/calculator.module.scss"
 import { ButtonTabProps } from "@/types/buttontab"
 import { ChangeEventHandler, useEffect, useState } from "react"
-import {chargePrice, calDistributionPrice, calDifurcation, calAdequatePrice} from "@/lib/auction"
+import {chargePrice, calDistributionPrice, calDifurcation} from "@/lib/auction"
 
 export default function Calculator() {
     const [userCount, setUserCount] = useState<number>(8)
@@ -90,7 +90,7 @@ export default function Calculator() {
                         <td>
                             <span className={`goldIconWrap`}>
                                 <span className={`goldIcon`}></span>
-                                <span className={`d-flex align-center`}>{price && userCount? calDifurcation(price, userCount): 0}</span>
+                                <span className={`d-flex align-center`}>{price && userCount? calDifurcation(price, userCount, null): 0}</span>
                             </span>
                         </td>
                     </tr>
@@ -99,7 +99,7 @@ export default function Calculator() {
                         <td>
                             <span className={`goldIconWrap`}>
                                 <span className={`goldIcon`}></span>
-                                <span className={`d-flex align-center`}>{price && userCount? calAdequatePrice(price, userCount): 0}</span>
+                                <span className={`d-flex align-center`}>{price && userCount? Math.floor(calDifurcation(price, userCount, null)/1.1): 0}</span>
                             </span>
                         </td>
                     </tr>

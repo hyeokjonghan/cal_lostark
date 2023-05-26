@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import style from "@/styles/page/auction/secret.module.scss"
 import axios from 'axios'
 import { SecretMapList, WithDropItem, SecretMap } from "@/types/secretMap";
-import {chargePrice, calDistributionPrice, calDifurcation, calAdequatePrice} from "@/lib/auction"
+import {chargePrice, calDistributionPrice, calDifurcation, chargePriceTotal} from "@/lib/auction"
 
 
 export default function SecretMap(props: { mapData: SecretMapList }) {
@@ -80,7 +80,7 @@ export default function SecretMap(props: { mapData: SecretMapList }) {
                                 <td>
                                     <span className={`goldIconWrap`}>
                                         <span className={`goldIcon`}></span>
-                                        <span className={`d-flex align-center`}>{chargePrice(totalPrice)}</span>
+                                        <span className={`d-flex align-center`}>{dropItemList && chargePriceTotal(dropItemList)}</span>
                                     </span>
                                 </td>
                             </tr>
@@ -98,7 +98,7 @@ export default function SecretMap(props: { mapData: SecretMapList }) {
                                 <td>
                                     <span className={`goldIconWrap`}>
                                         <span className={`goldIcon`}></span>
-                                        <span className={`d-flex align-center`}>{calDifurcation(totalPrice, userCount)}</span>
+                                        <span className={`d-flex align-center`}>{dropItemList && calDifurcation(totalPrice, userCount, dropItemList)}</span>
                                     </span>
                                 </td>
                             </tr>
@@ -107,7 +107,7 @@ export default function SecretMap(props: { mapData: SecretMapList }) {
                                 <td>
                                     <span className={`goldIconWrap`}>
                                         <span className={`goldIcon`}></span>
-                                        <span className={`d-flex align-center`}>{calAdequatePrice(totalPrice, userCount)}</span>
+                                        <span className={`d-flex align-center`}>{dropItemList && Math.ceil(calDifurcation(totalPrice, userCount, dropItemList)/1.1)}</span>
                                     </span>
                                 </td>
                             </tr>
