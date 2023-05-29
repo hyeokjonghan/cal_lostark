@@ -64,7 +64,6 @@ export function matarialTotalPrice(item: ProduceItem) {
     item.with_item_material.map(material => {
         buyPriceTotal = buyPriceTotal + (material.now_price / material.bundle_count) * material.cost
     })
-    console.log("matarialTotalPrice =>", buyPriceTotal)
     return buyPriceTotal
 }
 

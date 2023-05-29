@@ -12,6 +12,7 @@ import { chargePrice } from "@/lib/auction"
 import { ProduceItem, ProduceItemList } from "@/types/produceItem"
 import { sortByNumber } from "@/lib/arrayObjectSort"
 import DefaultModal from "@/components/modal/defaultModal"
+import {getItemBg, getItemColor} from "@/lib/items"
 
 export default function Home(props: { lifeItem: LifeItem, produceItemList: ProduceItemList }) {
     const [gateringType, setGateringType] = useState<string>("90200")
@@ -225,8 +226,9 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
                                                 <span className={`responsibleTableColTitle`}>아이템</span>
                                                 <div className={`responsibleTableColData`}>
                                                     <div className={`${style.itemWrap}`}>
-                                                        <Image src={item.item_icon} width={40} height={40} alt='아이템 아이콘'></Image>
-                                                        <span>{item.item_name}</span>
+                                                        <span className={`${getItemBg(item.item_grade)}`}><Image src={item.item_icon} width={40} height={40} alt='아이템 아이콘'></Image></span>
+                                                        <span className={`${getItemColor(item.item_grade)}`}>{item.item_name}</span>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -415,8 +417,8 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
                                         <div className={`responsibleTableColData`}>
 
                                             <div className={`${style.itemWrap} curour-pointer`} onClick={() => { openProduceItemModal(index) }}>
-                                                <Image src={item.item_icon} width={40} height={40} alt='아이템 아이콘'></Image>
-                                                <span>{item.produce_item_name}</span>
+                                                <span className={`${getItemBg(item.item_grade)}`}><Image src={item.item_icon} width={40} height={40} alt='아이템 아이콘'></Image></span>
+                                                <span className={`${getItemColor(item.item_grade)}`}><span>{item.produce_item_name}</span></span>
                                             </div>
 
                                         </div>

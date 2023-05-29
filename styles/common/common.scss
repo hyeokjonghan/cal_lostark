@@ -93,51 +93,63 @@ a {
 }
 
 .grade5-bg {
+    border: 1px solid #000;
     background: linear-gradient(135deg,#341a09,#a24006);
 }
 
 .grade4-bg {
+    border: 1px solid #000;
     background: linear-gradient(135deg,#362003,#9e5f04);
 }
 
 .grade3-bg {
+    border: 1px solid #000;
     background: linear-gradient(135deg,#261331,#480d5d);
 }
 
 .grade2-bg {
+    border: 1px solid #000;
     background: linear-gradient(135deg,#111f2c,#113d5d);
 }
 
 .grade1-bg {
+    border: 1px solid #000;
     background: linear-gradient(135deg,#18220b,#304911);
 }
 
 .grade0-bg {
+    border: 1px solid #000;
     background: linear-gradient(135deg,#232323,#575757);
 }
 
 .grade5-color {
+    font-weight: bold;
     color: rgb(250, 93, 0);
 }
 
 .grade4-color {
+    font-weight: bold;
     color: rgb(249, 146, 0);
 }
 
 .grade3-color {
+    font-weight: bold;
     color: rgb(206, 67, 252);
 }
 
 .grade2-color {
+    font-weight: bold;
     color: rgb(0, 176, 250);
 }
 
 .grade1-color {
-    color: rgb(141, 249, 1);
+    font-weight: bold;
+    color: rgb(131, 204, 36);
 }
 
 .grade0-color {
-    color: rgb(255, 255, 255);
+    font-weight: bold;
+    color: rgb(23, 23, 23);
 }
 
 .loss {
@@ -168,4 +180,8 @@ a {
 
 .t-a-c {
     text-align: center;
+}
+
+.bold {
+    font-weight: bold;
 }

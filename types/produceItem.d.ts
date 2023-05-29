@@ -18,6 +18,7 @@ export interface ProduceItem {
   y_trade_count: number
   with_item_material: WithItemMaterial[]
   item_icon: string,
+  item_grade: string,
   buy_create_revenu?:number
 }
 

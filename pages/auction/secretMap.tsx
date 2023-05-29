@@ -8,6 +8,7 @@ import style from "@/styles/page/auction/secret.module.scss"
 import axios from 'axios'
 import { SecretMapList, WithDropItem, SecretMap } from "@/types/secretMap";
 import {chargePrice, calDistributionPrice, calDifurcation, chargePriceTotal} from "@/lib/auction"
+import { formatNumberWithCommas } from "@/lib/textReplace";
 
 
 export default function SecretMap(props: { mapData: SecretMapList }) {
@@ -40,6 +41,8 @@ export default function SecretMap(props: { mapData: SecretMapList }) {
         defaultValue: checkSecrectMap
     }
 
+    const item = buttonTabInfo.buttonListItem.find(obj => obj.value === checkSecrectMap)
+
     useEffect(() => {
         setDropItemList(props.mapData.find(obj => obj.map_id === checkSecrectMap)?.with_drop_item)
     }, [checkSecrectMap])
@@ -61,7 +64,7 @@ export default function SecretMap(props: { mapData: SecretMapList }) {
                     <table className={`defaultTable ${style.mapInfoWrap}`}>
                         <thead>
                             <tr>
-                                <th colSpan={2}>파푸니카 비밀지도</th>
+                                <th colSpan={2}>{item?.title} 비밀지도</th>
 
                             </tr>
                         </thead>
@@ -71,7 +74,7 @@ export default function SecretMap(props: { mapData: SecretMapList }) {
                                 <td>
                                     <span className={`goldIconWrap`}>
                                         <span className={`goldIcon`}></span>
-                                        <span className={`d-flex align-center`}>{totalPrice}</span>
+                                        <span className={`d-flex align-center`}>{formatNumberWithCommas(totalPrice)}</span>
                                     </span>
                                 </td>
                             </tr>
@@ -80,7 +83,7 @@ export default function SecretMap(props: { mapData: SecretMapList }) {
                                 <td>
                                     <span className={`goldIconWrap`}>
                                         <span className={`goldIcon`}></span>
-                                        <span className={`d-flex align-center`}>{dropItemList && chargePriceTotal(dropItemList)}</span>
+                                        <span className={`d-flex align-center`}>{dropItemList && formatNumberWithCommas(chargePriceTotal(dropItemList))}</span>
                                     </span>
                                 </td>
                             </tr>
@@ -89,25 +92,34 @@ export default function SecretMap(props: { mapData: SecretMapList }) {
                                 <td>
                                     <span className={`goldIconWrap`}>
                                         <span className={`goldIcon`}></span>
-                                        <span className={`d-flex align-center`}>{calDistributionPrice(totalPrice, userCount)}</span>
+                                        <span className={`d-flex align-center`}>{formatNumberWithCommas(calDistributionPrice(totalPrice, userCount))}</span>
                                     </span>
                                 </td>
                             </tr>
                             <tr>
-                                <td>손익 분기점</td>
+                                <td><span className="bold loss">손익 분기점</span></td>
                                 <td>
                                     <span className={`goldIconWrap`}>
                                         <span className={`goldIcon`}></span>
-                                        <span className={`d-flex align-center`}>{dropItemList && calDifurcation(totalPrice, userCount, dropItemList)}</span>
+                                        <span className={`d-flex align-center bold loss`}>{dropItemList && formatNumberWithCommas(calDifurcation(totalPrice, userCount, dropItemList))}</span>
                                     </span>
                                 </td>
                             </tr>
                             <tr>
-                                <td>입찰 적정가</td>
+                                <td><span className="bold grade3-color">경매선빵</span></td>
                                 <td>
                                     <span className={`goldIconWrap`}>
                                         <span className={`goldIcon`}></span>
-                                        <span className={`d-flex align-center`}>{dropItemList && Math.ceil(calDifurcation(totalPrice, userCount, dropItemList)/1.1)}</span>
+                                        <span className={`d-flex align-center bold grade3-color`}>{dropItemList && formatNumberWithCommas(Math.ceil(calDifurcation(totalPrice, userCount, dropItemList)/1.05))}</span>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span className="bold grade2-color">입찰 적정가</span></td>
+                                <td>
+                                    <span className={`goldIconWrap`}>
+                                        <span className={`goldIcon`}></span>
+                                        <span className={`d-flex align-center bold grade2-color`}>{dropItemList && formatNumberWithCommas(Math.ceil(calDifurcation(totalPrice, userCount, dropItemList)/1.1))}</span>
                                     </span>
                                 </td>
                             </tr>

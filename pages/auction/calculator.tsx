@@ -4,6 +4,7 @@ import style from "@/styles/page/auction/calculator.module.scss"
 import { ButtonTabProps } from "@/types/buttontab"
 import { ChangeEventHandler, useEffect, useState } from "react"
 import {chargePrice, calDistributionPrice, calDifurcation} from "@/lib/auction"
+import { formatNumberWithCommas } from "@/lib/textReplace"
 
 export default function Calculator() {
     const [userCount, setUserCount] = useState<number>(8)
@@ -63,7 +64,7 @@ export default function Calculator() {
                     </div>
 
                 </div>
-                <table className={`table defaultTable ${style.calculatorResultWrap}`}>
+                <table className={`defaultTable ${style.calculatorResultWrap}`}>
                     <tr>
                         <th colSpan={2}>결과</th>
                     </tr>
@@ -72,7 +73,7 @@ export default function Calculator() {
                         <td>
                             <span className={`goldIconWrap`}>
                                 <span className={`goldIcon`}></span>
-                                <span className={`d-flex align-center`}>{price? chargePrice(price):0}</span>
+                                <span className={`d-flex align-center`}>{price? formatNumberWithCommas(chargePrice(price)):0}</span>
                             </span>
                         </td>
                     </tr>
@@ -81,25 +82,25 @@ export default function Calculator() {
                         <td>
                             <span className={`goldIconWrap`}>
                                 <span className={`goldIcon`}></span>
-                                <span className={`d-flex align-center`}>{price && userCount? calDistributionPrice(price,userCount) : 0}</span>
+                                <span className={`d-flex align-center`}>{price && userCount? formatNumberWithCommas(calDistributionPrice(price,userCount)) : 0}</span>
                             </span>
                         </td>
                     </tr>
                     <tr>
-                        <td>손익 분기점</td>
+                        <td><span className="bold loss">손익 분기점</span></td>
                         <td>
                             <span className={`goldIconWrap`}>
                                 <span className={`goldIcon`}></span>
-                                <span className={`d-flex align-center`}>{price && userCount? calDifurcation(price, userCount, null): 0}</span>
+                                <span className={`d-flex align-center bold loss`}>{price && userCount? formatNumberWithCommas(calDifurcation(price, userCount, null)): 0}</span>
                             </span>
                         </td>
                     </tr>
                     <tr>
-                        <td>입찰 적정가</td>
+                        <td><span className="bold grade2-color">입찰 적정가</span></td>
                         <td>
                             <span className={`goldIconWrap`}>
                                 <span className={`goldIcon`}></span>
-                                <span className={`d-flex align-center`}>{price && userCount? Math.floor(calDifurcation(price, userCount, null)/1.1): 0}</span>
+                                <span className={`d-flex align-center bold grade2-color`}>{price && userCount? formatNumberWithCommas(Math.floor(calDifurcation(price, userCount, null)/1.1)) : 0}</span>
                             </span>
                         </td>
                     </tr>
