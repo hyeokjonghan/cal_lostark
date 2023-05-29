@@ -3,8 +3,8 @@ import NoImagePageLayout from "@/layout/noImagePageLayout"
 import style from "@/styles/page/auction/calculator.module.scss"
 import { ButtonTabProps } from "@/types/buttontab"
 import { ChangeEventHandler, useEffect, useState } from "react"
-import {chargePrice, calDistributionPrice, calDifurcation} from "@/lib/auction"
-import { formatNumberWithCommas } from "@/lib/textReplace"
+import { chargePrice, calDistributionPrice, calDifurcation } from "@/lib/auction"
+import { formatNumberWithCommas, removeFrontZero } from "@/lib/textReplace"
 
 export default function Calculator() {
     const [userCount, setUserCount] = useState<number>(8)
@@ -13,16 +13,16 @@ export default function Calculator() {
         setUserCount(count)
     }
 
-    const buttonTabInfo:ButtonTabProps = {
-        radioName:"usercount",
+    const buttonTabInfo: ButtonTabProps = {
+        radioName: "usercount",
         buttonListItem: [
             {
                 value: 4,
-                title:"4인"
+                title: "4인"
             },
             {
                 value: 8,
-                title:"8인"
+                title: "8인"
             }
         ],
         clickEvent: changeUserCount,
@@ -31,11 +31,12 @@ export default function Calculator() {
 
     useEffect(() => {
         // 연산 처리
-        
+
     }, [userCount, price])
 
-    const changeUserCountInput:ChangeEventHandler<HTMLInputElement> = (event) => {
-        if(parseInt(event.target.value) > 0) {
+    const changeUserCountInput: ChangeEventHandler<HTMLInputElement> = (event) => {
+        event.target.value = removeFrontZero(event.target.value)
+        if (parseInt(event.target.value) > 0) {
             setUserCount(parseInt(event.target.value))
         } else {
             setUserCount(0)
@@ -46,10 +47,15 @@ export default function Calculator() {
         setPrice(0)
     }
 
-    const changePrice:ChangeEventHandler<HTMLInputElement> = (event) => {
-        setPrice(parseInt(event.target.value))
+    const changePrice: ChangeEventHandler<HTMLInputElement> = (event) => {
+        event.target.value = removeFrontZero(event.target.value)
+        let checkPrice = parseInt(event.target.value)
+        if(checkPrice < 0 || isNaN(checkPrice)) {
+            checkPrice = 0
+        }
+        setPrice(checkPrice)
     }
-    
+
     return <>
         <NoImagePageLayout>
             <section className={style.calculatorWrap}>
@@ -65,45 +71,49 @@ export default function Calculator() {
 
                 </div>
                 <table className={`defaultTable ${style.calculatorResultWrap}`}>
-                    <tr>
-                        <th colSpan={2}>결과</th>
-                    </tr>
-                    <tr>
-                        <td>판매 수수료</td>
-                        <td>
-                            <span className={`goldIconWrap`}>
-                                <span className={`goldIcon`}></span>
-                                <span className={`d-flex align-center`}>{price? formatNumberWithCommas(chargePrice(price)):0}</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>분배금</td>
-                        <td>
-                            <span className={`goldIconWrap`}>
-                                <span className={`goldIcon`}></span>
-                                <span className={`d-flex align-center`}>{price && userCount? formatNumberWithCommas(calDistributionPrice(price,userCount)) : 0}</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span className="bold loss">손익 분기점</span></td>
-                        <td>
-                            <span className={`goldIconWrap`}>
-                                <span className={`goldIcon`}></span>
-                                <span className={`d-flex align-center bold loss`}>{price && userCount? formatNumberWithCommas(calDifurcation(price, userCount, null)): 0}</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span className="bold grade2-color">입찰 적정가</span></td>
-                        <td>
-                            <span className={`goldIconWrap`}>
-                                <span className={`goldIcon`}></span>
-                                <span className={`d-flex align-center bold grade2-color`}>{price && userCount? formatNumberWithCommas(Math.floor(calDifurcation(price, userCount, null)/1.1)) : 0}</span>
-                            </span>
-                        </td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th colSpan={2}>결과</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>판매 수수료</td>
+                            <td>
+                                <span className={`goldIconWrap`}>
+                                    <span className={`goldIcon`}></span>
+                                    <span className={`d-flex align-center`}>{price ? formatNumberWithCommas(chargePrice(price)) : 0}</span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>분배금</td>
+                            <td>
+                                <span className={`goldIconWrap`}>
+                                    <span className={`goldIcon`}></span>
+                                    <span className={`d-flex align-center`}>{price && userCount ? formatNumberWithCommas(calDistributionPrice(price, userCount)) : 0}</span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span className="bold loss">손익 분기점</span></td>
+                            <td>
+                                <span className={`goldIconWrap`}>
+                                    <span className={`goldIcon`}></span>
+                                    <span className={`d-flex align-center bold loss`}>{price && userCount ? formatNumberWithCommas(calDifurcation(price, userCount, null)) : 0}</span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span className="bold grade2-color">입찰 적정가</span></td>
+                            <td>
+                                <span className={`goldIconWrap`}>
+                                    <span className={`goldIcon`}></span>
+                                    <span className={`d-flex align-center bold grade2-color`}>{price && userCount ? formatNumberWithCommas(Math.floor(calDifurcation(price, userCount, null) / 1.1)) : 0}</span>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </section>
         </NoImagePageLayout>

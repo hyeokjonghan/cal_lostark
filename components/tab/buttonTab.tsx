@@ -9,8 +9,8 @@ export default function ButtonTab({ buttonTabProp }: buttonTabProp) {
             {
                 buttonTabProp.buttonListItem.map((item, index) => {
                     return <>
-                        <li>
-                            <label key={item.value} className={`tabRadio`}>
+                        <li key={item.value}>
+                            <label className={`tabRadio`}>
                                 <input type="radio"
                                     value={item.value}
                                     onChange={() => { buttonTabProp.clickEvent(item.value) }}

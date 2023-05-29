@@ -6,7 +6,7 @@ import { LifeItem, LifeItemList } from "@/types/lifeItem"
 import axios from "axios"
 import Image from 'next/image'
 import { useEffect, useRef, useState } from "react"
-import { formatNumberWithCommas } from "@/lib/textReplace"
+import { formatNumberWithCommas, removeFrontZero } from "@/lib/textReplace"
 import { getTotalItemRevenue, itemTargetAmount, getUseLifePotionToGold, getUseEssenceOfLeapToGold, buyCreateRevenue, calProduceTotalPrice, matarialTotalPrice } from "@/lib/gathering/gathering"
 import { chargePrice } from "@/lib/auction"
 import { ProduceItem, ProduceItemList } from "@/types/produceItem"
@@ -67,6 +67,9 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
     }
 
     const setNowPrice = (price: number, index: number) => {
+        if(price < 0 || isNaN(price)) {
+            price = 0
+        }
         if (lifeItemList) {
             setLifeItemList(current => {
                 if (current) {
@@ -109,10 +112,17 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
     }
 
     const changeUseLifePotion = (input: number) => {
+        if(input < 0 || isNaN(input)) {
+            input = 0
+        }
         setUseLifePotion(input)
     }
 
     const changeUseEssenceOfLeap = (input: number) => {
+        
+        if(input < 0 || isNaN(input)) {
+            input = 0
+        }
         setUseEssenceOfLeap(input)
     }
 
@@ -241,19 +251,19 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
                                             <div className={`responsibleTableCol`}>
                                                 <span className={`responsibleTableColTitle`}>현재 최저가</span>
                                                 <div className={`responsibleTableColData`}>
-                                                    <input type="number" defaultValue={item.with_market_price.now_price} onChange={(e) => { setNowPrice(parseInt(e.target.value), index) }}></input>
+                                                    <input type="number" value={item.with_market_price.now_price} onChange={(e) => { e.target.value = removeFrontZero(e.target.value), setNowPrice(parseInt(e.target.value), index) }}></input>
                                                 </div>
                                             </div>
                                             <div className={`responsibleTableCol`}>
                                                 <span className={`responsibleTableColTitle`}>현재수량</span>
                                                 <div className={`responsibleTableColData`}>
-                                                    <input type="number" defaultValue={item.have_item_count} onChange={(e) => { setHaveItemCount(parseInt(e.target.value), index) }}></input>
+                                                    <input type="number" value={item.have_item_count} onChange={(e) => {e.target.value = removeFrontZero(e.target.value), setHaveItemCount(parseInt(e.target.value), index) }}></input>
                                                 </div>
                                             </div>
                                             <div className={`responsibleTableCol`}>
                                                 <span className={`responsibleTableColTitle`}>목표수량</span>
                                                 <div className={`responsibleTableColData`}>
-                                                    <input type="number" defaultValue={item.target_item_count} onChange={(e) => { setTargetItemCount(parseInt(e.target.value), index) }}></input>
+                                                    <input type="number" value={item.target_item_count} onChange={(e) => {e.target.value = removeFrontZero(e.target.value), setTargetItemCount(parseInt(e.target.value), index) }}></input>
                                                 </div>
                                             </div>
                                             <div className={`responsibleTableCol`}>
@@ -288,7 +298,7 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
                                         </div>
                                     </div>
                                     <div>
-                                        <input type="number" value={useLifePotion} onChange={(e) => { changeUseLifePotion(parseInt(e.target.value)) }}></input>
+                                        <input type="number" value={useLifePotion} onChange={(e) => {e.target.value = removeFrontZero(e.target.value), changeUseLifePotion(parseInt(e.target.value)) }}></input>
                                     </div>
                                 </div>
 
@@ -301,7 +311,7 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
                                         </div>
                                     </div>
                                     <div>
-                                        <input type="number" value={useEssenceOfLeap} onChange={(e) => changeUseEssenceOfLeap(parseInt(e.target.value))}></input>
+                                        <input type="number" value={useEssenceOfLeap} onChange={(e) => {e.target.value = removeFrontZero(e.target.value), changeUseEssenceOfLeap(parseInt(e.target.value))}}></input>
                                     </div>
                                 </div>
                             </div>
