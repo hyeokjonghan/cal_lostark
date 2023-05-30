@@ -84,6 +84,10 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
     }
 
     const setHaveItemCount = (count: number, index: number) => {
+        if(count < 0 || isNaN(count)) {
+            count = 0
+        }
+
         if (lifeItemList) {
             setLifeItemList(current => {
                 if (current) {
@@ -98,6 +102,10 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
     }
 
     const setTargetItemCount = (count: number, index: number) => {
+        if(count < 0 || isNaN(count)) {
+            count = 0
+        }
+
         if (lifeItemList) {
             setLifeItemList(current => {
                 if (current) {

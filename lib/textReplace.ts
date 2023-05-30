@@ -6,4 +6,4 @@ export function removeFrontZero(input : string) {
     return input.replace(/^0+/,'')
 }
 
-export default {formatNumberWithCommas}
+export default {formatNumberWithCommas, removeFrontZero}
