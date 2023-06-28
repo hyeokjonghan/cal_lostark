@@ -19,7 +19,8 @@ export interface ProduceItem {
   with_item_material: WithItemMaterial[]
   item_icon: string,
   item_grade: string,
-  buy_create_revenu?:number
+  buy_create_revenu?:number,
+  is_view?: boolean
 }
 
 export interface WithItemMaterial {

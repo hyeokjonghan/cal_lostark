@@ -6,46 +6,46 @@ import { LifeItem } from "@/types/lifeItem"
 import axios from "axios"
 import Image from 'next/image'
 import { useEffect, useState } from "react"
-export default function GatheringCal(props: {lifeItem: LifeItem}) {
+export default function GatheringCal(props: { lifeItem: LifeItem }) {
     const [gateringType, setGateringType] = useState<number>(1)
-    const clickGateringTypeEvent = (value:number) => {
+    const clickGateringTypeEvent = (value: number) => {
         setGateringType(value)
     }
-    const buttonTabInfo:ButtonTabProps = {
-        radioName:"gatering",
+    const buttonTabInfo: ButtonTabProps = {
+        radioName: "gatering",
         defaultValue: gateringType,
         buttonListItem: [
             {
-                value:1,
-                title:"식물채집"
+                value: 1,
+                title: "식물채집"
             },
             {
-                value:2,
-                title:"벌목"
+                value: 2,
+                title: "벌목"
             },
             {
-                value:3,
-                title:"채광"
+                value: 3,
+                title: "채광"
             },
             {
-                value:4,
-                title:"낚시"
+                value: 4,
+                title: "낚시"
             },
             {
-                value:5,
-                title:"고고학"
+                value: 5,
+                title: "고고학"
             },
             {
-                value:6,
-                title:"수렵"
+                value: 6,
+                title: "수렵"
             },
         ],
-        clickEvent:clickGateringTypeEvent
+        clickEvent: clickGateringTypeEvent
     }
     useEffect(() => {
         // 여기서 처리
         console.dir(props.lifeItem)
-    },[gateringType])
+    }, [gateringType])
 
     return <>
         <main className={`${style.calWrap}`}>
@@ -247,6 +247,7 @@ export default function GatheringCal(props: {lifeItem: LifeItem}) {
                     {/* 반응형 테이블 */}
                     {/* 아이템, 현재 최저가, 거래량, 주간 최저가 구매제작 수익, 현재가 구매제작 수익,  상세보기 */}
                     <div className={`responsibleTableWrap`}>
+
                         <div className={`responsibleTableHeader`}>
                             <div>아이템</div>
                             <div>현재 최저가</div>

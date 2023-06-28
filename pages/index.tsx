@@ -5,14 +5,14 @@ import { ButtonTabContent, ButtonTabProps } from "@/types/buttontab"
 import { LifeItem, LifeItemList } from "@/types/lifeItem"
 import axios from "axios"
 import Image from 'next/image'
-import { useEffect, useRef, useState } from "react"
+import { ChangeEventHandler, KeyboardEvent, KeyboardEventHandler, useEffect, useRef, useState } from "react"
 import { formatNumberWithCommas, removeFrontZero } from "@/lib/textReplace"
 import { getTotalItemRevenue, itemTargetAmount, getUseLifePotionToGold, getUseEssenceOfLeapToGold, buyCreateRevenue, calProduceTotalPrice, matarialTotalPrice } from "@/lib/gathering/gathering"
 import { chargePrice } from "@/lib/auction"
 import { ProduceItem, ProduceItemList } from "@/types/produceItem"
 import { sortByNumber } from "@/lib/arrayObjectSort"
 import DefaultModal from "@/components/modal/defaultModal"
-import {getItemBg, getItemColor} from "@/lib/items"
+import { getItemBg, getItemColor } from "@/lib/items"
 
 export default function Home(props: { lifeItem: LifeItem, produceItemList: ProduceItemList }) {
     const [gateringType, setGateringType] = useState<string>("90200")
@@ -28,7 +28,11 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
     const [produceItemOrder, setProduceItemOrder] = useState({ index: '', order: '' })
     const [produceInfoModal, setProduceInfoModal] = useState<boolean>(false)
     const [produceModalItem, setProduceModalItem] = useState<ProduceItem | null>(null)
+    const [searchProduceItemKeyword, setSearchProduceItemKeyword] = useState("")
 
+    const changeProduceItemKeyword:ChangeEventHandler<HTMLInputElement> = (event) => {
+        setSearchProduceItemKeyword(event.target.value)
+    }
 
     const clickGateringTypeEvent = (value: string) => {
         setGateringType(value)
@@ -67,7 +71,7 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
     }
 
     const setNowPrice = (price: number, index: number) => {
-        if(price < 0 || isNaN(price)) {
+        if (price < 0 || isNaN(price)) {
             price = 0
         }
         if (lifeItemList) {
@@ -84,7 +88,7 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
     }
 
     const setHaveItemCount = (count: number, index: number) => {
-        if(count < 0 || isNaN(count)) {
+        if (count < 0 || isNaN(count)) {
             count = 0
         }
 
@@ -102,7 +106,7 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
     }
 
     const setTargetItemCount = (count: number, index: number) => {
-        if(count < 0 || isNaN(count)) {
+        if (count < 0 || isNaN(count)) {
             count = 0
         }
 
@@ -120,15 +124,15 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
     }
 
     const changeUseLifePotion = (input: number) => {
-        if(input < 0 || isNaN(input)) {
+        if (input < 0 || isNaN(input)) {
             input = 0
         }
         setUseLifePotion(input)
     }
 
     const changeUseEssenceOfLeap = (input: number) => {
-        
-        if(input < 0 || isNaN(input)) {
+
+        if (input < 0 || isNaN(input)) {
             input = 0
         }
         setUseEssenceOfLeap(input)
@@ -211,6 +215,18 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
         setProduceItemList(setBuyRevenuList)
     }, [greatSuccessRate, feeReductionRate])
 
+    useEffect(() => {
+        const tempProduceItemList = [...produceItemList]
+        tempProduceItemList.map((item) => {
+            if (item.produce_item_name.includes(searchProduceItemKeyword)) {
+                item.is_view = true
+            } else {
+                item.is_view = false
+            }
+        })
+
+        setProduceItemList(tempProduceItemList)
+    }, [searchProduceItemKeyword])
 
     return <>
         <main className={`${style.calWrap}`}>
@@ -265,13 +281,13 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
                                             <div className={`responsibleTableCol`}>
                                                 <span className={`responsibleTableColTitle`}>현재수량</span>
                                                 <div className={`responsibleTableColData`}>
-                                                    <input type="number" value={item.have_item_count} onChange={(e) => {e.target.value = removeFrontZero(e.target.value), setHaveItemCount(parseInt(e.target.value), index) }}></input>
+                                                    <input type="number" value={item.have_item_count} onChange={(e) => { e.target.value = removeFrontZero(e.target.value), setHaveItemCount(parseInt(e.target.value), index) }}></input>
                                                 </div>
                                             </div>
                                             <div className={`responsibleTableCol`}>
                                                 <span className={`responsibleTableColTitle`}>목표수량</span>
                                                 <div className={`responsibleTableColData`}>
-                                                    <input type="number" value={item.target_item_count} onChange={(e) => {e.target.value = removeFrontZero(e.target.value), setTargetItemCount(parseInt(e.target.value), index) }}></input>
+                                                    <input type="number" value={item.target_item_count} onChange={(e) => { e.target.value = removeFrontZero(e.target.value), setTargetItemCount(parseInt(e.target.value), index) }}></input>
                                                 </div>
                                             </div>
                                             <div className={`responsibleTableCol`}>
@@ -306,7 +322,7 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
                                         </div>
                                     </div>
                                     <div>
-                                        <input type="number" value={useLifePotion} onChange={(e) => {e.target.value = removeFrontZero(e.target.value), changeUseLifePotion(parseInt(e.target.value)) }}></input>
+                                        <input type="number" value={useLifePotion} onChange={(e) => { e.target.value = removeFrontZero(e.target.value), changeUseLifePotion(parseInt(e.target.value)) }}></input>
                                     </div>
                                 </div>
 
@@ -319,7 +335,7 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
                                         </div>
                                     </div>
                                     <div>
-                                        <input type="number" value={useEssenceOfLeap} onChange={(e) => {e.target.value = removeFrontZero(e.target.value), changeUseEssenceOfLeap(parseInt(e.target.value))}}></input>
+                                        <input type="number" value={useEssenceOfLeap} onChange={(e) => { e.target.value = removeFrontZero(e.target.value), changeUseEssenceOfLeap(parseInt(e.target.value)) }}></input>
                                     </div>
                                 </div>
                             </div>
@@ -416,6 +432,12 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
 
                     {/* 반응형 테이블 */}
                     {/* 아이템, 현재 최저가, 거래량, 주간 최저가 구매제작 수익, 현재가 구매제작 수익,  상세보기 */}
+                    <div className={style.itemSearchWrap}>
+                        <div>
+                            <input type="text" placeholder="Search" value={searchProduceItemKeyword} onChange={changeProduceItemKeyword}></input>
+                        </div>
+                    </div>
+
                     <div className={`responsibleTableWrap`}>
                         <div className={`responsibleTableHeader`}>
                             <div>아이템</div>
@@ -428,57 +450,59 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
                         </div>
 
                         {produceItemList && produceItemList.map((item, index) => {
-                            return <>
-                                <div className={`responsibleTableRow`}>
-                                    <div className={`responsibleTableCol`}>
-                                        <span className={`responsibleTableColTitle`}>아이템</span>
-                                        <div className={`responsibleTableColData`}>
+                            if (item.is_view) {
+                                return <>
+                                    <div className={`responsibleTableRow`}>
+                                        <div className={`responsibleTableCol`}>
+                                            <span className={`responsibleTableColTitle`}>아이템</span>
+                                            <div className={`responsibleTableColData`}>
 
-                                            <div className={`${style.itemWrap} curour-pointer`} onClick={() => { openProduceItemModal(index) }}>
-                                                <span className={`${getItemBg(item.item_grade)}`}><Image src={item.item_icon} width={40} height={40} alt='아이템 아이콘'></Image></span>
-                                                <span className={`${getItemColor(item.item_grade)}`}><span>{item.produce_item_name}</span></span>
+                                                <div className={`${style.itemWrap} curour-pointer`} onClick={() => { openProduceItemModal(index) }}>
+                                                    <span className={`${getItemBg(item.item_grade)}`}><Image src={item.item_icon} width={40} height={40} alt='아이템 아이콘'></Image></span>
+                                                    <span className={`${getItemColor(item.item_grade)}`}><span>{item.produce_item_name}</span></span>
+                                                </div>
+
                                             </div>
-
+                                        </div>
+                                        <div className={`responsibleTableCol`}>
+                                            <span className={`responsibleTableColTitle`}>필요 활동력</span>
+                                            <div className={`responsibleTableColData`}>
+                                                {item.produce_cost}
+                                            </div>
+                                        </div>
+                                        <div className={`responsibleTableCol`}>
+                                            <span className={`responsibleTableColTitle`}>현재 최저가</span>
+                                            <div className={`responsibleTableColData`}>
+                                                {item.now_price}
+                                            </div>
+                                        </div>
+                                        <div className={`responsibleTableCol`}>
+                                            <span className={`responsibleTableColTitle`}>제작시간</span>
+                                            <div className={`responsibleTableColData`}>
+                                                {item.produce_cost_time}
+                                            </div>
+                                        </div>
+                                        <div className={`responsibleTableCol`}>
+                                            <span className={`responsibleTableColTitle`}>제작비용</span>
+                                            <div className={`responsibleTableColData`}>
+                                                {calProduceTotalPrice(item, feeReductionRate).toFixed(1)}
+                                            </div>
+                                        </div>
+                                        <div className={`responsibleTableCol`}>
+                                            <span className={`responsibleTableColTitle`}>구매 제작 수익</span>
+                                            <div className={`responsibleTableColData`}>
+                                                <span className={buyCreateRevenue(item, greatSuccessRate, feeReductionRate) > 0 ? 'benefit' : 'loss'}>{item.buy_create_revenu ? item.buy_create_revenu.toFixed(1) : 0}</span>
+                                            </div>
+                                        </div>
+                                        <div className={`responsibleTableCol`}>
+                                            <span className={`responsibleTableColTitle`}>거래량</span>
+                                            <div className={`responsibleTableColData`}>
+                                                {formatNumberWithCommas(item.y_trade_count)}
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className={`responsibleTableCol`}>
-                                        <span className={`responsibleTableColTitle`}>필요 활동력</span>
-                                        <div className={`responsibleTableColData`}>
-                                            {item.produce_cost}
-                                        </div>
-                                    </div>
-                                    <div className={`responsibleTableCol`}>
-                                        <span className={`responsibleTableColTitle`}>현재 최저가</span>
-                                        <div className={`responsibleTableColData`}>
-                                            {item.now_price}
-                                        </div>
-                                    </div>
-                                    <div className={`responsibleTableCol`}>
-                                        <span className={`responsibleTableColTitle`}>제작시간</span>
-                                        <div className={`responsibleTableColData`}>
-                                            {item.produce_cost_time}
-                                        </div>
-                                    </div>
-                                    <div className={`responsibleTableCol`}>
-                                        <span className={`responsibleTableColTitle`}>제작비용</span>
-                                        <div className={`responsibleTableColData`}>
-                                            {calProduceTotalPrice(item, feeReductionRate).toFixed(1)}
-                                        </div>
-                                    </div>
-                                    <div className={`responsibleTableCol`}>
-                                        <span className={`responsibleTableColTitle`}>구매 제작 수익</span>
-                                        <div className={`responsibleTableColData`}>
-                                            <span className={buyCreateRevenue(item, greatSuccessRate, feeReductionRate) > 0 ? 'benefit' : 'loss'}>{item.buy_create_revenu ? item.buy_create_revenu.toFixed(1) : 0}</span>
-                                        </div>
-                                    </div>
-                                    <div className={`responsibleTableCol`}>
-                                        <span className={`responsibleTableColTitle`}>거래량</span>
-                                        <div className={`responsibleTableColData`}>
-                                            {formatNumberWithCommas(item.y_trade_count)}
-                                        </div>
-                                    </div>
-                                </div>
-                            </>
+                                </>
+                            }
                         })}
                     </div>
                 </section>
@@ -564,7 +588,7 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
                                             {produceModalItem.production_number}
                                         </td>
                                         <td>
-                                            
+
                                             <span className={`goldIconWrap`}>
                                                 <span className={produceModalItem.produce_price_type === '0' ? 'goldIcon' : 'slingIcon'}></span>
                                                 <span className={`d-flex align-center`}><span>{formatNumberWithCommas(produceModalItem.produce_price)}</span></span>
@@ -603,24 +627,24 @@ export default function Home(props: { lifeItem: LifeItem, produceItemList: Produ
                                                 <div className={`${style.totalResultFormula}`}>
                                                     <span className={`goldIconWrap`}>
                                                         <span className={`goldIcon`}></span>
-                                                        <span className={`d-flex align-center`}><span>{(produceModalItem.production_number * produceModalItem.now_price * (1.05 + (5*greatSuccessRate/10000))).toFixed(1)}</span> <Tooltip tooltipText={`판매시 수익(가격 * 제작된 갯수 * 대성공 확률)`}></Tooltip></span>
+                                                        <span className={`d-flex align-center`}><span>{(produceModalItem.production_number * produceModalItem.now_price * (1.05 + (5 * greatSuccessRate / 10000))).toFixed(1)}</span> <Tooltip tooltipText={`판매시 수익(가격 * 제작된 갯수 * 대성공 확률)`}></Tooltip></span>
                                                     </span>
                                                     <span>-</span>
                                                     <span className={`goldIconWrap`}>
                                                         <span className={`goldIcon`}></span>
-                                                        <span className={`d-flex align-center`}><span>{(chargePrice(produceModalItem.now_price) * produceModalItem.production_number * (1.05 + (5*greatSuccessRate/10000))).toFixed(1)}</span> <Tooltip tooltipText={`거래 수수료 * 제작된 개수 * 대성공 확률`}></Tooltip></span>
+                                                        <span className={`d-flex align-center`}><span>{(chargePrice(produceModalItem.now_price) * produceModalItem.production_number * (1.05 + (5 * greatSuccessRate / 10000))).toFixed(1)}</span> <Tooltip tooltipText={`거래 수수료 * 제작된 개수 * 대성공 확률`}></Tooltip></span>
                                                     </span>
                                                     <span>-</span>
                                                     {produceModalItem.produce_price_type === '0' && <>
-                                                    <span className={`goldIconWrap`}>
-                                                        <span className={`goldIcon`}></span>
-                                                        <span className={`d-flex align-center`}><span>{Math.floor(produceModalItem.produce_price * (1 - (feeReductionRate/100)))}</span> <Tooltip tooltipText={`제작비용, 소수점 내림`}></Tooltip></span>
-                                                    </span>
-                                                    <span>-</span>
+                                                        <span className={`goldIconWrap`}>
+                                                            <span className={`goldIcon`}></span>
+                                                            <span className={`d-flex align-center`}><span>{Math.floor(produceModalItem.produce_price * (1 - (feeReductionRate / 100)))}</span> <Tooltip tooltipText={`제작비용, 소수점 내림`}></Tooltip></span>
+                                                        </span>
+                                                        <span>-</span>
                                                     </>}
-                                                    
 
-                                                    
+
+
                                                     <span className={`goldIconWrap`}>
                                                         <span className={`goldIcon`}></span>
                                                         <span className={`d-flex align-center`}><span>{matarialTotalPrice(produceModalItem).toFixed(1)}</span> <Tooltip tooltipText={`재료비용`}></Tooltip></span>
@@ -662,6 +686,9 @@ export async function getServerSideProps() {
                 array[i]['target_item_count'] = 0
             }
         }
+        produceItemList?.map((item) => {
+            item.is_view = true
+        })
     } catch (error) {
         console.dir(error)
     }

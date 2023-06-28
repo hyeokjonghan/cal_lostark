@@ -57,6 +57,29 @@
     }
 
     .gatheringContentWrap {
+        .itemSearchWrap {
+            padding: 10px;
+            background-color: $primaryColor;
+            display: flex;
+            justify-content: flex-end;
+            input[type=text] {
+                background-color: transparent;
+                color: #FFF;
+                height: 40px;
+                border-radius: 20px;
+                font-size: 1.1em;
+                padding: 5px 20px;
+                outline: 2px solid #FFF;
+                font-weight: bold;
+                border: none;
+                &:focus {
+                    outline: 2px solid #FFF;
+                    border: none;
+                }
+                
+            }
+        }
+
         .gatheringContentTitle {
             border-bottom: 2px solid $subPrimaryColor;
             margin-bottom: 10px;
